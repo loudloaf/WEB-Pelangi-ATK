@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+/* GLOBAL STATIONERY PAPER TEXTURE */
+@layer base {
+  body {
+    /* Your bright, clean off-white base color */
+    background-color: #f8fafc; 
+    position: relative;
+  }
+
+  /* We create a dedicated background layer for the crumpled paper */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; 
+    
+    /* Point this to the file you just saved in your public folder! */
+    background-image: url("/crumpled-paper.jpg");
+
+    /* UPDATED: needed so background-blend-mode below has a color to
+       blend the texture against — same base tone as body's own background */
+    background-color: #f8fafc;
+    
+    /* We stretch it across the whole screen like a giant poster */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Turn the opacity UP so the wrinkles are highly visible */
+    opacity: 0.6; 
+    
+    /* UPDATED: background-blend-mode instead of mix-blend-mode.
+       Same visual "multiply" darkening, but it only blends this element's
+       own image against its own background-color — it does NOT need to
+       composite against every other layer on the page like mix-blend-mode
+       does, which is the expensive part. Fixed + mix-blend-mode together
+       on a full-viewport layer forces a heavy recomposite on basically
+       every paint; this achieves the identical look without that cost. */
+    background-blend-mode: multiply;
+  }
+
+  /* Smooth out your main wrappers to let the texture breathe */
+  .main-page-wrapper, 
+  main {
+    background: transparent !important;
+  }
+}
